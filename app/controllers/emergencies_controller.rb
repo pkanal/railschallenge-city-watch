@@ -13,7 +13,8 @@ class EmergenciesController < ActionController::Base
     if @emergency.save
       render 'show'
     else
-      render 'shared/errors'
+      # TODO: create shared error page for emergencies and responders
+      render 'errors'
     end
   end
 
@@ -22,7 +23,7 @@ class EmergenciesController < ActionController::Base
     if @emergency.update_attributes(permitted_params)
       render 'show'
     else
-      render 'shared/errors'
+      render 'errors'
     end
   end
 

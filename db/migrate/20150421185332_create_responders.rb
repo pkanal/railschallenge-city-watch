@@ -6,7 +6,6 @@ class CreateResponders < ActiveRecord::Migration
       t.integer :capacity
       t.boolean :on_duty, default: false
       t.string :emergency_code
-      
       t.timestamps null: false
     end
   end
