@@ -5,6 +5,7 @@ class EmergenciesController < ActionController::Base
 
   def show
     @emergency = Emergency.find_by(code: params[:code])
+    render json: { message: 'page not found' }, status: 404 if @emergency.nil?
   end
 
   def create
@@ -12,7 +13,16 @@ class EmergenciesController < ActionController::Base
     if @emergency.save
       render 'show'
     else
-      render status: 422, json: { message: @emergency.errors }
+      render 'shared/errors'
+    end
+  end
+
+  def update
+    @emergency = Emergency.find_by(code: params[:code])
+    if @emergency.update_attributes(permitted_params)
+      render 'show'
+    else
+      render 'shared/errors'
     end
   end
 
@@ -28,10 +38,13 @@ class EmergenciesController < ActionController::Base
     render json: { message: 'page not found' }, status: 404
   end
 
-
   private
 
   def emergency_params
     params.permit(:code, :fire_severity, :police_severity, :medical_severity)
+  end
+
+  def permitted_params
+    params.permit(:fire_severity, :police_severity, :medical_severity)
   end
 end
