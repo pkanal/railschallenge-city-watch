@@ -1,15 +1,12 @@
 class RespondersController < ActionController::Base
+  # TODO: Change all error codes to appropriate symbols
   def index
     @responders = Responder.all
     if params[:show] == 'capacity'
-      # TODO: Move to Responder model
-      @capacity = {Fire: [], Police: [], Medical: []}
-      @responders.each do |responder|
-        @capacity[:Fire] << responder.capacity if responder.type == 'Fire'
-        @capacity[:Police] << responder.capacity if responder.type == 'Police'
-        @capacity[:Medical] << responder.capacity if responder.type == 'Medical'
-      end
-      render json: { capacity: @capacity }
+      @capacity = Responder.show_city_capacity
+      render json: { capacity: @capacity }, status: :ok
+    else
+      @responders = Responder.all
     end
   end
 
