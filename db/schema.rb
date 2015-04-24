@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421185332) do
+ActiveRecord::Schema.define(version: 20150422144149) do
 
   create_table "emergencies", force: :cascade do |t|
     t.string   "code"
     t.integer  "fire_severity"
     t.integer  "police_severity"
     t.integer  "medical_severity"
+    t.string   "responders"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
@@ -30,6 +31,9 @@ ActiveRecord::Schema.define(version: 20150421185332) do
     t.string   "emergency_code"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.integer  "emergency_id"
   end
+
+  add_index "responders", ["emergency_id"], name: "index_responders_on_emergency_id"
 
 end

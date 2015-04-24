@@ -16,7 +16,7 @@ class RespondersController < ActionController::Base
   end
 
   def create
-    @responder = Responder.new(responder_params)
+    @responder = Responder.new(responder_create_params)
     if @responder.save
       render 'show'
     else
@@ -27,7 +27,7 @@ class RespondersController < ActionController::Base
 
   def update
     @responder = Responder.find_by(name: params[:name])
-    if @responder.update_attributes(params.permit(:on_duty))
+    if @responder.update_attributes(responder_update_params)
       render 'show'
     else
       render 'errors', status: 422
@@ -48,7 +48,11 @@ class RespondersController < ActionController::Base
 
   private
 
-  def responder_params
-    params.permit(:type, :name, :capacity)
+  def responder_create_params
+    params.require(:responder).permit(:type, :name, :capacity)
+  end
+
+  def responder_update_params
+    params.permit(:on_duty)
   end
 end
