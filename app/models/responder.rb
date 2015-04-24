@@ -3,7 +3,7 @@ class Responder < ActiveRecord::Base
   self.inheritance_column = nil
   validates :type, presence: true
   validates :name, presence: true, uniqueness: true
-  validates :capacity, presence: true, numericality: { greater_than_or_equal_to: 0, less_than: 6 }
+  validates :capacity, presence: true, inclusion: { in: 1..5 }
 
   RESPONDER_TYPES = %w(Fire Police Medical)
 
@@ -21,8 +21,8 @@ class Responder < ActiveRecord::Base
     responders = type_of_responder(type)
     capacity_info = []
     capacity_info << capacity_of(responders)
-    capacity_info << capacity_of(responders.on_duty)
     capacity_info << capacity_of(responders.available)
+    capacity_info << capacity_of(responders.on_duty)
     capacity_info << capacity_of(responders.available_and_on_duty)
   end
 
