@@ -1,4 +1,4 @@
-class RespondersController < ActionController::Base
+class RespondersController < ApplicationController
   # TODO: Change all error codes to appropriate symbols
   def index
     @responders = Responder.all

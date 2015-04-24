@@ -1,4 +1,4 @@
-class EmergenciesController < ActionController::Base
+class EmergenciesController < ApplicationController
   def index
     @emergencies = Emergency.all
   end
